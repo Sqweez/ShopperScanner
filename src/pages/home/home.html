@@ -1,14 +1,15 @@
 <ion-header>
   <ion-navbar>
     <ion-title>
-      Ionic Blank
+      {{user.shop_name}} | {{user.user_name}}
     </ion-title>
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-  The world is your oyster.
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
-  </p>
+<ion-content>
+  <div class="container__">
+    <button ion-button block (click)="makeRevision()">Создать ревизию</button>
+    <button ion-button block (click)="comingSoon()">Coming soon</button>
+    <button ion-button block (click)="comingSoon()">Coming soon</button>
+  </div>
 </ion-content>

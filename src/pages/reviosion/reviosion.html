@@ -1,0 +1,25 @@
+<!--
+  Generated template for the ReviosionPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-navbar>
+    <ion-title>{{user.shop_name}} | {{user.user_name}}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item *ngFor="let item of barcodes">
+      <p>{{item}}</p>
+    </ion-item>
+  </ion-list>
+
+
+</ion-content>
+<ion-footer>
+    <button ion-button color="primary" (click)="scanIt()" block>Отсканировать</button>
+    <button ion-button color="primary" (click)="sendToServer()" block>Проверить</button>
+</ion-footer>

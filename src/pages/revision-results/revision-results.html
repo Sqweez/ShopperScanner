@@ -1,0 +1,25 @@
+<!--
+  Generated template for the RevisionResultsPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-navbar>
+    <ion-title>{{user.shop_name}} | {{user.user_name}}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <h2 style="text-align: center;">Результаты ревизии</h2>
+  <h3 style="text-align: center;" *ngIf="isRevisionOkay">Все в порядке!</h3>
+  <ion-list *ngIf="!isRevisionOkay">
+    <ion-item *ngFor="let item of object" style="width: 100%; height: 25%; background-color: #ff0000">
+      <div style="display: flex;">
+        <img  [src]="item.photo" style="max-width: 100px; max-height: 100px; margin-right: 10px;">
+        <p style="font-weight: 600; color: #fff">{{item.name}} | {{item.size}}</p>
+      </div>
+    </ion-item>
+  </ion-list>
+
+</ion-content>
