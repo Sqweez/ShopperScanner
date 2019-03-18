@@ -3,6 +3,7 @@ import { NavController } from 'ionic-angular';
 import {User} from "../../models/user";
 import {ToastProvider} from "../../providers/toast/toast";
 import {ReviosionPage} from "../reviosion/reviosion";
+import {RevisionsHistoryPage} from "../revisions-history/revisions-history";
 
 @Component({
   selector: 'page-home',
@@ -26,6 +27,15 @@ export class HomePage {
 
   comingSoon(){
     this.toastProvider.create("Тут пока ничего нет");
+  }
+
+  goToRevisionHistory(){
+    let revisions = localStorage.getItem("revisions") ? JSON.parse(localStorage.getItem("revisions")): [];
+    if(revisions.length == 0){
+      this.toastProvider.create("Вы не проводили ни одной ревизии!");
+      return 0;
+    }
+    this.navCtrl.push("RevisionsHistoryPage", {revisions: revisions});
   }
 
 }

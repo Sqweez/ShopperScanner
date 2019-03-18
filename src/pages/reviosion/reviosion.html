@@ -16,7 +16,12 @@
       <p>{{item}}</p>
     </ion-item>
   </ion-list>
-
+  <ion-infinite-scroll (ionInfinite)="$event.waitFor(doInfinite())" *ngIf="!isEndOfList">
+    <ion-infinite-scroll-content
+      loadingSpinner="bubbles"
+      loadingText="Пожалуйста, подождите"
+    ></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 
 </ion-content>
 <ion-footer>

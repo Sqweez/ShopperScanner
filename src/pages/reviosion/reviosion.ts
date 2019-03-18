@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import {IonicPage, NavController, NavParams, Platform} from 'ionic-angular';
 import {ToastProvider} from "../../providers/toast/toast";
 import {BarcodeScanner} from "@ionic-native/barcode-scanner";
 import {Http} from "@angular/http";
@@ -19,7 +19,10 @@ export class ReviosionPage {
   };
   response: any;
   barcodes = [];
+  barcodes_ = [];
+  isEndOfList = false;
   constructor(
+    private platform: Platform,
     public http: Http,
     public toastProvider: ToastProvider,
     public navCtrl: NavController,
@@ -27,8 +30,8 @@ export class ReviosionPage {
     public barcodeScanner: BarcodeScanner) {
     this.user = this.navParams.get("user");
     if(localStorage.getItem("barcodes")){
-      let temp_barcodes = localStorage.getItem("barcodes").split(",");
-      this.barcodes = temp_barcodes;
+      this.barcodes_ = JSON.parse(localStorage.getItem("barcodes"));
+      this.barcodes = this.barcodes_.slice(0, 50);
     }
   }
 
@@ -37,18 +40,41 @@ export class ReviosionPage {
   }
 
   ionViewDidLeave() {
-    let data = this.barcodes.toString();
-    localStorage.setItem("barcodes", data);
+    localStorage.setItem("barcodes", JSON.stringify(this.barcodes_));
   }
 
   scanIt(){
-    this.barcodeScanner.scan().then(barcodeData => {
+    this.barcodeScanner.scan({
+      prompt: "Отсканируйте штрих-код"
+    }).then(barcodeData => {
+      this.platform.registerBackButtonAction(() => {
+        return 0;
+      });
       if(!this.barcodes.includes(barcodeData.text)){
         this.barcodes.push(barcodeData.text);
       }
+      return 0;
     }).catch(err => {
       console.log('Error', err);
     });
+  }
+
+  doInfinite(): Promise<any> {
+    console.log("Begin async operation");
+    let length = this.barcodes.length;
+    return new Promise((resolve => {
+      setTimeout(() => {
+        if(length === this.barcodes_.length){
+          this.isEndOfList = true;
+          return resolve();
+        }
+        for(let i = 0; i < 50; i++){
+          this.barcodes.push(this.barcodes_[length+i]);
+        }
+        console.log("Async operation has ended");
+        resolve();
+      }, 500)
+    }))
   }
 
   sendToServer(){

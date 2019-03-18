@@ -1,12 +1,12 @@
 <!--
-  Generated template for the RevisionResultsPage page.
+  Generated template for the RevisionFromHistoryPage page.
 
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
 <ion-header>
   <ion-navbar>
-    <ion-title>{{user.shop_name}} | {{user.user_name}}</ion-title>
+    <ion-title>Ревизия от {{revision.date}}</ion-title>
   </ion-navbar>
 </ion-header>
 
@@ -16,12 +16,12 @@
   <ion-list *ngIf="!isRevisionOkay">
     <ion-item *ngFor="let item of items_slice" style="width: 100%; height: 25%; background-color: #ff0000">
       <div style="display: flex;">
-        <img  [src]="item.photo" style="max-width: 100px; max-height: 100px; margin-right: 10px;">
+        <img [src]="item.photo" style="max-width: 100px; max-height: 100px; margin-right: 10px;">
         <p style="font-weight: 600; color: #fff">{{item.name}} | {{item.size}} | {{item.sellSumma}}</p>
       </div>
     </ion-item>
   </ion-list>
-  <ion-infinite-scroll (ionInfinite)="$event.waitFor(doInfinite())" *ngIf="!isTheEndOfList && !isRevisionOkay">
+  <ion-infinite-scroll (ionInfinite)="$event.waitFor(doInfinite())" *ngIf="!isTheEndOfList">
     <ion-infinite-scroll-content
       loadingSpinner="bubbles"
       loadingText="Пожалуйста, подождите"
